@@ -11,14 +11,17 @@ repositories {
     mavenCentral()
 }
 
+val kotest: String by project
+
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
+    implementation("io.kotest:kotest-runner-junit5-jvm:4.6.0")
+    testImplementation("io.kotest:kotest-assertions-core:$kotest")
+    testImplementation("io.kotest:kotest-framework-engine:$kotest")
+    testImplementation("io.kotest:kotest-property:$kotest")
+    testImplementation("io.kotest:kotest-runner-junit5:$kotest")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.2")
     testImplementation(kotlin("test"))
-}
-
-tasks.test {
-    useJUnitPlatform()
 }
 
 tasks {
@@ -30,5 +33,8 @@ tasks {
     }
     withType<KotlinCompile> {
         kotlinOptions.jvmTarget = "1.8"
+    }
+    test {
+        useJUnitPlatform()
     }
 }
